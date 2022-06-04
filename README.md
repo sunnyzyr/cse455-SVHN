@@ -1,4 +1,4 @@
-# Street View House Numbers
+# Street View House Numbers Classification
 Group Member: Sunny Zheng, Yanfeng Cui, Melody Zhang
 
 ## Project Description
