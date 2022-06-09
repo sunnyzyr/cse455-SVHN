@@ -188,6 +188,10 @@
                             <li>Linear(1024, 512)</li>
                             <li>ReLU()</li>
                             <li>Linear(512, 10)</li>
+                            <li>nn.ReLU()</li>
+                            <li>nn.Linear(256, 128)</li>
+                            <li>nn.ReLU()</li>
+                            <li>nn.Linear(128, 10)</li>
                         </ul>   
                         <p>We started with adding more layers. We had a couple of additional convolutional layers to extract more features as well as more linear transformation layers and ReLu. Then we wanted to avoid overfitting, so we added a dropout function. We also did a little testing and tuning, trying out different parameters for the functions and changing the learning rate slightly. At the end, the model was able to reach around 93% of accuracy. </p>
                         <div class="row justify-content-center">
