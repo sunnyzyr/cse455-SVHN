@@ -75,10 +75,10 @@
                         <p>Video summary of the project:</p>
                         <p>
                           <iframe width="560" height="315"
-                        src="" title="YouTube video player"
-                        frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </p>
+                          src="https://www.youtube.com/embed/oJmXAdRmDEE" title="YouTube video player"
+                          frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                          encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                          </p>
 
                         <!-- Dataset -->
                         <a name="data"></a>
@@ -111,56 +111,26 @@
                         <!-- Pre -->
                         <a name="pre"></a>
                         <h2>Pre-existing work</h2>
-                        <p>PyTorch has a number of models built-in and other pre-trained models:</p>
+                        <p>PyTorch has a number of models built-in and our model was revised from <a href="https://colab.research.google.com/drive/1EBz4feoaUvz-o_yeMI27LEQBkvrXNc_4?usp=sharing#scrollTo=76z4UJgTR13J">tutorial 3</a>: </p>
                         <ul>
-                            <li><code>AlexNet</code>
-                            </li>
                             <li><code>Darknet Reference Model</code>
-                            </li>
-                            <li><code>VGG-16</code>
-                            </li>
-                            <li><code>Resnet18</code>
                             </li>
                         </ul>
                         
-                        <!-- Approach 1 -->
+                        <!-- Data Loading -->
                         <a name="app1"></a>
-                        <h2>Approach 1: Try using different models included by PyTorch</h2>
-                        <p>some different model????</p>
-
-                        <!-- Approach 2 -->
-                        <a name="app2"></a>
-                        <h2>Approach 2: Test different optimizers?</h2>
-                        <p>We used SDG, and other optimizers: adam, adadelta, adagrad, adamax, Ftrl, Nadam, Ftrl, Nadam, RMSprop</p>
-          
-
-                        <!-- Approach 3 -->
-                        <a name="app3"></a>
-                        <h2>Approach 3: Augment Images</h2>
+                        <h2>Loading data</h2>
                         <p>We found that image augmentation can add more <Strong>randomness</Strong>!</p>
-                        <h3>Normalization</h3>
-                        <p>We perform a grayscale normalization to reduce the effect of illumination's differences, it makes CNN faster.</p>
-                        <h3>Random Crop</h3>
-                        <p>We randomly take 32x32 crops from 40x40 padded images</p>
-                        <h3>Random image flip</h3>
-                        <p>The starter code randomly flips the image horizontally</p>
+                        <p><Strong>Normalization:</Strong> We perform a grayscale normalization to reduce the effect of illumination's differences, it makes CNN faster.</p>
+                        <p><Strong>Random Crop:</Strong> We randomly take 32x32 crops from 40x40 padded images</p>
+                        <p><Strong>Random image flip:</Strong> Starter code randomly flips the image horizontally</p>
 
-                        <!-- Approach 4 -->
-                        <a name="app4"></a>
-                        <h2>Approach 4: Increase the number of Epochs</h2>
-                        <p>some different results????</p>
-
-                        <!-- Approach 5 -->
-                        <a name="app5"></a>
-                        <h2>(Potential) Approach 5: Use the extra data provided</h2>
-                        <p>In the dataset, it has some extra data provided which are less difficult samples, to use as extra training data. 
-                            Theoretically, when more data is involved in the training process, the classifier can be performed better.</p>
 
                         <!-- Pro -->
                         <a name="pro"></a>
                         <h2>Models we created:</h2>
                         <p><Strong>ComplexCNN:</Strong> 4 convolutional layers with batch normalization, maxpooling, a global average pooling, and a linear layer</p>
-                        <p>Structure:</p>
+                        <p><Strong>Structure:</Strong></p>
                         <ul style="list-style-type:none;">
                             <li>Conv2d(3, 16, 3, padding=1, bias=False)</li>
                             <li>BatchNorm2d(16)</li>
@@ -172,6 +142,24 @@
                             <li>BatchNorm2d(128)</li>
                             <li>Linear(128, 10)</li>
                         </ul>
+                        <p>This model is a modification of the model of pytorch tutorial 3. It has successive 3x3 convolutional layers with maxpooling ending with a global average pooling and fully connected layer.
+                            Also, since we are using batch normalization we can turn off the biases in the convolutional layers. <code>nn.BatchNorm2d</code> has biases built in and the mean subtraction would undo any bias from the convolutional layer.</p>
+                        <p><Strong>Result:</Strong></p>
+                        <p>The accuracy is almost 76.1409%. The loss curve looks standard for these types of models.
+                        </p>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <img class="img-fluid" src="assets/img/loss-one.png" alt="numbers" />
+                                <span class="caption text-muted">Losses for the first model</span>
+                            </div>
+                        </div>
+                        <p> We also implement transfer learning with this model. From the result we can see that even though the accuracy has not improved significantly, there is still a gap between pretrained testing and not pretrained testing.</p>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <img class="img-fluid" src="assets/img/pretrain-loss.png" alt="numbers" />
+                                <span class="caption text-muted">Losses with the pretrained weights</span>
+                            </div>
+                        </div>
                         <p><Strong>RevisedCNN:</Strong> 6 convolutioal layers with batch normalization, maxpooling, Rectified Linear Units activation, 3 linear layers</p>
                         <p>Structure:</p>
                         <ul style="list-style-type:none;">
@@ -200,18 +188,32 @@
                             <li>Linear(1024, 512)</li>
                             <li>ReLU()</li>
                             <li>Linear(512, 10)</li>
-                        </ul>    
-
+                        </ul>   
+                        <p>We started with adding more layers. We had a couple of additional convolutional layers to extract more features as well as more linear transformation layers and ReLu. Then we wanted to avoid overfitting, so we added a dropout function. We also did a little testing and tuning, trying out different parameters for the functions and changing the learning rate slightly. At the end, the model was able to reach around 93% of accuracy. </p>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <img class="img-fluid" src="assets/img/loss-two.png" alt="numbers" />
+                                <span class="caption text-muted">Losses for the second model</span>
+                            </div>
+                        </div>
+                        <p>Then we also used an open source library, gradio, to create a little GUI for our model. We created a sketch pad that allows users to input handwritten digits, which the model will recognize the input synchronously.</p>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <img class="img-fluid" src="assets/img/label.png" alt="numbers" />
+                                <span class="caption text-muted">Gradio GUI</span>
+                            </div>
+                        </div>
+                        
                         <!-- Takeaways -->
                         <a name="takeaway"></a>
                         <h1>IV. Takeaways</h1>
-                        
+                        <p>One challenge we have is to picking which model used to train at the beginning since there are lots of models provided by the Pythorch. So there are many other models that we did not get to explore. For the next step, we will try explore using different optimizers for different network architectures. And also try different image augmentation method that get the model to a better accuracy.</p>
 
                         <!-- References -->
                         <a name="ref"></a>
                         <h1>V. References</h1>
                         <ul>
-                            <li>[1] Kaggle. (n.d.). <i>SVHN Classification with CNN (Keras - ~96% Acc).</i> Kaggle. Retrieved June 4, 2022, from https://www.kaggle.com/code/dimitriosroussis/svhn-classification-with-cnn-keras-96-acc/notebook </li>
+                            <li>[1] Tutorial 3. <i>ImageNet and Transfer Learning.</i> Colab. Retrieved June 4, 2022, from https://colab.research.google.com/drive/1EBz4feoaUvz-o_yeMI27LEQBkvrXNc_4?usp=sharing#scrollTo=76z4UJgTR13J </li>
                         </ul>
                     </div>
                 </div>
@@ -224,7 +226,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <ul class="list-inline text-center">
                             <li class="list-inline-item">
-                                <a href="https://github.com/MoSummers-dy/cse455-final-project">
+                                <a href="https://github.com/sunnyzyr/cse455-SVHN">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-github fa-stack-1x fa-inverse"></i>
